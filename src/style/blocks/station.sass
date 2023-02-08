@@ -1,0 +1,246 @@
+.station
+	padding-top: 15px
+	padding-bottom: 25px
+	background-color: #ebf1f4
+	&__top
+		display: flex
+		align-items: center
+		justify-content: space-between
+		flex: 1 100%
+		margin-bottom: 10px
+		@include media-breakpoint-down(sm)
+			flex-wrap: wrap
+		&-content
+			padding-right: 20px
+			flex: 1
+			@include media-breakpoint-down(sm)
+				padding-right: 0
+				margin-bottom: 15px
+		&-title
+			margin: 0
+			font-weight: 600
+			font-size: 18px
+			line-height: 20px
+			color: #2e384d
+			margin-bottom: 10px
+		&-info
+			display: flex
+			flex-wrap: wrap
+		&-item
+			display: flex
+			align-items: center
+			margin-right: 20px
+			@include media-breakpoint-down(sm)
+				margin-right: 0
+				flex: 1 100%
+				margin-bottom: 5px
+			&:last-child
+				margin-right: 0
+				margin-bottom: 0
+		&-icon
+			font-size: 0
+			margin-right: 5px
+		&-text
+			font-size: 13px
+			line-height: 20px
+			color: #2e384d
+	&__search
+		flex: 0 330px
+		position: relative
+		@include media-breakpoint-down(sm)
+			flex: 1 100%
+		&-btn
+			position: absolute
+			left: 12px
+			top: 12px
+			font-size: 0
+			background: 0
+			padding: 0
+			cursor: pointer
+			border: 0
+			fill: none
+			stroke: #8798AD
+			transition: .3s ease-in-out
+			&:hover,
+			&:focus-visible
+				stroke: #c14c97
+		&-input
+			height: 48px
+			width: 100%
+			background-color: #fff
+			box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.01)
+			border-radius: 12px
+			padding: 0 44px
+			font-family: $lato-font
+			font-size: 15px
+			line-height: 20px
+			border: 0
+			color: #2E384D
+			&::-webkit-input-placeholder
+				color: #8798AD
+				opacity: 1
+				transition: opacity .3s
+			&:focus::-webkit-input-placeholder
+				opacity: 1
+			&:-moz-placeholder
+				color: #8798AD
+				opacity: 1
+				transition: opacity .3s
+			&:focus::-moz-placeholder
+				opacity: 1
+			&::-moz-placeholder
+				color: #8798AD
+				opacity: 1
+				transition: opacity .3s
+			&:focus:-moz-placeholder
+				opacity: 1
+			&:-ms-input-placeholder
+				color: #8798AD
+				opacity: 1
+				transition: opacity .3s
+			&:focus:-ms-input-placeholder
+				opacity: 1
+			&:focus:required:invalid,
+			&:focus:required:invalid
+				color: #2E384D
+			&:required:valid,
+			&:required:valid
+				color: #2E384D
+	&__list
+		flex: 1 100%
+	&__item
+		display: flex
+		flex-wrap: wrap
+		align-items: flex-start
+		padding: 15px
+		background: #FFFFFF
+		border-radius: 12px
+		margin-bottom: 10px
+		@include media-breakpoint-down(sm)
+			padding: 0
+		&:last-child
+			margin-bottom: 0
+		&-content
+			flex: 0 200px
+			margin-right: 40px
+			@include media-breakpoint-down(sm)
+				flex: 1 100%
+				margin-right: 0
+				padding: 10px
+				padding-bottom: 15px
+				border-bottom: 1px solid #dfe5ed
+				margin-bottom: 15px
+		&-title
+			font-weight: 500
+			font-size: 12px
+			line-height: 20px
+			color: #4c9fc1
+			margin: 0
+			margin-bottom: 10px
+			@include media-breakpoint-down(sm)
+				font-size: 15px
+		&-buy
+			width: 100%
+			height: 40px
+			background-color: #4c9fc1
+			border-radius: 12px
+			display: flex
+			align-items: center
+			justify-content: center
+			text-align: center
+			text-decoration: none
+			cursor: pointer
+			padding: 0
+			font-size: 15px
+			line-height: 18px
+			font-weight: 500
+			color: #fff
+			transition: .3s ease-in-out
+			@include media-breakpoint-down(sm)
+				height: 43px
+			&:hover,
+			&:focus-visible
+				background-color: lighten(#4C9FC1, 10%)
+			&_mob
+				display: none
+				@include media-breakpoint-down(sm)
+					display: flex
+			&_desc
+				@include media-breakpoint-down(sm)
+					display: none
+	&__schedule
+		flex: 1
+		@include media-breakpoint-down(sm)
+			flex: 1 100%
+			padding: 10px
+			padding-top: 0
+		&-grid
+			display: grid
+			grid-template-columns: repeat(4,1fr)
+			grid-gap: 5px 0
+			justify-content: space-between
+			margin-bottom: 10px
+			@include media-breakpoint-down(sm)
+				grid-template-columns: repeat(1,1fr)
+				grid-gap: 10px 0
+		&-item
+			display: flex
+			align-items: center
+		&-icon
+			font-size: 0
+			margin-right: 5px
+			@include media-breakpoint-down(sm)
+				order: 1
+				margin-right: 0
+				margin-left: auto
+		&-text
+			font-family: $lato-font
+			font-weight: 800
+			margin-right: 5px
+			font-size: 15px
+			line-height: 20px
+			color: #2e384d
+		&-day
+			font-size: 12px
+			line-height: 20px
+			color: #2e384d
+			.is-holiday
+				color: #c14c97
+				@include media-breakpoint-down(sm)
+					color: #ff4169
+		&-name
+			font-size: 12px
+			line-height: 20px
+			a
+				color: #4C9FC1
+				text-decoration: none
+				transition: .3s ease-in-out
+				@include media-breakpoint-down(sm)
+					width: 100%
+					padding: 5px 0
+					min-height: 38px
+					display: flex
+					align-items: center
+					justify-content: center
+					text-align: center
+					border: 1px solid #4C9FC1
+					border-radius: 5px
+					line-height: 18px
+				&:hover,
+				&:focus-visible,
+				&.is-active
+					color: #c14c97
+					@include media-breakpoint-down(sm)
+						border-color: #c14c97
+		&-more
+			font-size: 12px
+			line-height: 20px
+			color: #4C9FC1
+			text-decoration: none
+			transition: .3s ease-in-out
+			@include media-breakpoint-down(sm)
+				font-size: 14px
+			&:hover,
+			&:focus-visible,
+			&.is-active
+				color: #c14c97

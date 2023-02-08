@@ -24,4 +24,10 @@ $(function() {
 		$temp.remove();
 	});
 
+	$('.station__schedule-day span').each(function() {
+		if($(this).text() === 'сб' || $(this).text() === 'вс') {
+			$(this).addClass('is-holiday');
+		}
+	})
+
 });
