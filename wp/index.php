@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-
-	<meta charset="utf-8">
-
-	<title></title>
-	<meta name="description" content="">
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-	<meta property="og:image" content="path/to/image.jpg">
-	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
-
-	<!-- Chrome, Firefox OS and Opera -->
-	<meta name="theme-color" content="#000">
-	<!-- Windows Phone -->
-	<meta name="msapplication-navbutton-color" content="#000">
-	<!-- iOS Safari -->
-	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
-
-	<style>body { opacity: 0; overflow-x: hidden; } html { background-color: #fff; }</style>
-	<link rel="stylesheet" href="css/main.min.css">
-
-</head>
-
-<body>
+<?php get_header(); ?>
 
 	<!-- start section station-header -->
 	<section class="station-header">
@@ -38,7 +7,7 @@
 			<script src="https://c45.travelpayouts.com/content?promo_id=2959&shmarker=195343&trs=88595&bus_from=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_to=&bus_sug1=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_sug2=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug3=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug4=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&color_theme=basic_white&show_logo_tab=false&show_logo=false" charset="utf-8" async></script>
 
 			<div class="station-header__info">
-				<img src="img/info-img-1.svg" alt="">
+				<img src="/wp-content/themes/autobus/img/info-img-1.svg" alt="">
 				<span>Чтобы узнать актуальное расписание, заполните форму выше</span>
 			</div>
 
@@ -93,14 +62,14 @@
 					</a>
 				</div>
 
-				<div class="station-header__map" data-map><img src="img/map.jpg" alt=""></div>
+				<div class="station-header__map" data-map><img src="/wp-content/themes/autobus/img/map.jpg" alt=""></div>
 
 			</div>
 
 			<div class="station-header__popular">
 				<h2 class="station-header__popular-title">
 					<span>Самые популярные рейсы</span>
-					<img src="img/bookmark.svg" alt="">
+					<img src="/wp-content/themes/autobus/img/bookmark.svg" alt="">
 				</h2>
 				<div class="station-header__popular-grid">
 					<a href="#" class="station-header__popular-item">Иваново — Владимир</a>
@@ -131,11 +100,11 @@
 					<h2 class="station__top-title">Расписание автобусов Автовокзал Иваново</h2>
 					<div class="station__top-info">
 						<div class="station__top-item">
-							<div class="station__top-icon"><img src="img/icon-1.svg" alt=""></div>
+							<div class="station__top-icon"><img src="/wp-content/themes/autobus/img/icon-1.svg" alt=""></div>
 							<div class="station__top-text">Отправление и прибытие по местному времени</div>
 						</div>
 						<div class="station__top-item">
-							<div class="station__top-icon"><img src="img/icon-2.svg" alt=""></div>
+							<div class="station__top-icon"><img src="/wp-content/themes/autobus/img/icon-2.svg" alt=""></div>
 							<div class="station__top-text">транзитный рейс</div>
 						</div>
 					</div>
@@ -161,7 +130,7 @@
 					<div class="station__schedule">
 						<div class="station__schedule-grid">
 							<div class="station__schedule-item" v-for="(schedule, key) in item.schedules">
-								<div class="station__schedule-icon" v-if="schedule.transit"><img src="img/icon-2.svg" alt=""></div>
+								<div class="station__schedule-icon" v-if="schedule.transit"><img src="/wp-content/themes/autobus/img/icon-2.svg" alt=""></div>
 								<div class="station__schedule-text">{{ schedule.time }}</div>
 								<div class="station__schedule-day" v-if="schedule.activeDays === 0">
 									<span>неизвестно</span>
@@ -239,99 +208,4 @@
 	</section>
 	<!-- end section station -->
 
-	<script src="js/main.min.js"></script>
-	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-	<script>
-		Vue.createApp({
-			data: () => ({
-				search: '',
-				loading: true,
-				url: 'https://bus.tutu.ru/bus/v1/schedule/bus_terminal/?bus_stop_id=1177120&offset=0&limit=100',
-				departure: 1444796,
-				stations: [],
-				stationsNames: {},
-				data: [],
-				dataStations: []
-			}),
-			mounted () {
-				fetch(this.url)
-					.then(res => res.text())
-					.then((res) => {
-						this.data = JSON.parse(res).data;
-						let obj;
-						this.data.forEach(item => {
-							this.dataStations.push(item.geoPointId);
-							obj = {
-								arrival: ''+item.geoPointId,
-								schedules: []
-							};
-							item.schedules.forEach(schedule => {
-								let someObj = {
-									time: schedule.time,
-									days: schedule.activeDaysData.mode,
-									transit: schedule.isTransit,
-									activeDays: schedule.activeDaysData.params.activeDays ? schedule.activeDaysData.params.activeDays : schedule.activeDays
-								};
-								obj.schedules.push(someObj)
-							})
-							this.stations.push(obj)
-						});
-
-						this.dataStationUnic.forEach(item => {
-							let geoUrl = `https://api-bus.tutu.ru/v1/search/?departureId=${this.departure}&arrivalId=${item}&departureDate=09.02.2023&seatCount=1`
-							fetch(geoUrl)
-								.then(res => res.text())
-								.then((res) => {
-									this.stationsNames[item] = JSON.parse(res).data.references.geoPoints[1].name;
-								})
-						});
-
-						this.init();
-					})
-			},
-			computed: {
-				dataStationUnic() {
-					let result = [];
-
-					result = this.dataStations.reduce((acc, item) => {
-						if (acc.includes(item)) {
-							return acc;
-						}
-						return [...acc, item];
-					}, [])
-
-					return result;
-				}
-			},
-			methods: {
-				searchFun: (e) => {
-					let target = e.target;
-					let val = target.value;
-					let $delay = 500;
-					clearTimeout(target.dataset.timer);
-					target.dataset.timer = setTimeout(() => {
-						target.dataset.timer = '';
-						let items = document.querySelectorAll('.station__item');
-						items.forEach((item) => {
-							item.style.display = 'flex';
-							let text = item.querySelector('.station__item-title span').textContent
-							console.log(val);
-							console.log(text);
-							console.log(text.indexOf(val));
-							if (text.indexOf(val) != -1) {
-								item.style.display = 'flex';
-							} else {
-								item.style.display = 'none';
-							}
-						})
-					}, $delay)
-				},
-				init: function() {
-
-				}
-			}
-		}).mount('#app');
-	</script>
-
-</body>
-</html>
+<?php get_footer(); ?>

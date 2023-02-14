@@ -1,6 +1,99 @@
 .station-header
 	padding-top: 20px
 	padding-bottom: 20px
+	.container
+		& > div:first-child
+			flex: 1 100%
+	#widget-container
+		margin-bottom: 25px
+	.destination
+		flex: 1
+	.widget_root[data-size=large] .tab_content .form, .widget_root[data-size=medium] .tab_content .form
+		@include media-breakpoint-down(md)
+			flex-wrap: wrap
+	.widget_root[data-size=large] .tab_content .wrapper_suggest_form_field,
+	.widget_root[data-size=medium] .tab_content .wrapper_suggest_form_field
+		max-width: none
+	.widget_root[data-size=large] .tab_content .form_field:not(:last-child),
+	.widget_root[data-size=medium] .tab_content .form_field:not(:last-child)
+		margin-right: 0
+		padding-right: 26px
+		background-image: url(../img/arrow.svg)
+		background-repeat: no-repeat
+		background-position: calc(100% - 5px) 31px
+	.widget_root .tab_content .form_field_input,
+	.widget_root .tab_content .date_input .form_field_input
+		border-radius: 8px
+		border: 1px solid #B0BAC9
+		background: 0
+		font-size: 15px
+		line-height: 18px
+		font-family: inherit
+		color: #2E384D
+	.widget_root .tab_content .date_input
+		background-image: url(../img/calendar.svg)
+		background-repeat: no-repeat
+		background-position: calc(100% - 6px) 7px
+		svg
+			display: none
+	.widget_root[data-size=large] .tab_content .form_field_tips>span, .widget_root[data-size=medium] .tab_content .form_field_tips>span
+		font-size: 10px
+		line-height: 20px
+		color: #2e384d
+		height: 20px
+		border-bottom: 1px dashed #D8D8D8
+		transition: .3s ease-in-out
+		&:hover
+			color: #c14c97
+			border-color: #C14C97
+	.widget_root[data-size=large] .tab_content .form_field_tips span.with_border, .widget_root[data-size=medium] .tab_content .form_field_tips span.with_border
+		border-bottom: 1px dashed #D8D8D8
+		transition: .3s ease-in-out
+		&:hover
+			color: #c14c97
+			border-color: #C14C97
+	.widget_root[data-size=large] .tab_content, .widget_root[data-size=medium] .tab_content, .widget_root .tab_content.single_tab
+		padding: 0
+		border: 0
+		border-radius: 0
+		margin-top: 0
+		background: 0
+	.widget_root[data-size=large] .tab_content .form_submit,
+	.widget_root[data-size=medium] .tab_content .form_submit,
+	.widget_root .tab_content .form_submit
+		min-height: 40px
+		width: 100%
+		font-size: 15px
+		font-weight: 500
+		max-width: 135px
+		background: #4c9fc1
+		border-radius: 8px
+		@include media-breakpoint-down(md)
+			max-width: unset
+			flex: 1
+	.widget_root .tab_content .tutu_icon_placeholder
+		display: none !important
+	.widget_root .tab_content .passengers_count_result
+		color: #2e384d
+	.passengers_count_result
+		border-top: 1px solid #b0bac9
+		border-bottom: 1px solid #b0bac9
+	.passengers_count_minus, .passengers_count_plus
+		border: 1px solid #b0bac9
+		font-weight: 300
+		color: #333
+	.widget_root[data-size=large] .tab_content .form_group, .widget_root[data-size=medium] .tab_content .form_group
+		padding-right: 5px
+		@include media-breakpoint-down(md)
+			flex: 1 100%
+			&.date
+				flex: 0 33%
+				@include media-breakpoint-down(xs)
+					flex: 0 50%
+			.date_form_field,
+			.bus-passangers_form_field
+				width: 100%
+				max-width: 100%
 	&__info
 		flex: 1 100%
 		display: flex

@@ -35,7 +35,7 @@
 	<section class="station-header">
 		<div class="container">
 
-			<script src="https://c45.travelpayouts.com/content?promo_id=2959&shmarker=195343&trs=88595&bus_from=&bus_to=&bus_sug1=&bus_sug2=&bus_sug3=&bus_sug4=&color_theme=basic_white&show_logo_tab=false&show_logo=false" charset="utf-8" async></script>
+			<script src="https://c45.travelpayouts.com/content?promo_id=2959&shmarker=195343&trs=88595&bus_from=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_to=&bus_sug1=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_sug2=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug3=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug4=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&color_theme=basic_white&show_logo_tab=false&show_logo=false" charset="utf-8" async></script>
 
 			<div class="station-header__info">
 				<img src="img/info-img-1.svg" alt="">
@@ -108,7 +108,7 @@
 					<a href="#" class="station-header__popular-item">Иваново — Иваново</a>
 					<a href="#" class="station-header__popular-item">Иваново — Иваново</a>
 					<a href="#" class="station-header__popular-item">Иваново — Суздаль</a>
-					<a href="#" class="station-header__popular-item is-active">Иваново — Суздаль</a>
+					<a href="#" class="station-header__popular-item">Иваново — Суздаль</a>
 					<a href="#" class="station-header__popular-item">Иваново — Ковров</a>
 					<a href="#" class="station-header__popular-item">Иваново — Ковров</a>
 					<a href="#" class="station-header__popular-item">Иваново — Шуя</a>
@@ -123,7 +123,7 @@
 	<!-- end section station-header -->
 
 	<!-- start section station -->
-	<section class="station">
+	<section class="station" id="app">
 		<div class="container">
 
 			<div class="station__top">
@@ -147,130 +147,90 @@
 							<path d="M20 20.5L17 17.5" stroke-width="2" stroke-linecap="round"/>
 						</svg>
 					</button>
-					<input type="text" name="search" class="station__search-input" placeholder="Остановка или населенный пункт" required>
+					<input type="text" name="search" class="station__search-input" placeholder="Остановка или населенный пункт" v-model="search" @keyup="searchFun" required>
 				</div>
 			</div>
 
 			<div class="station__list">
-				<div class="station__item">
+				<div class="station__item" v-for="(item, key) in stations">
 					<div class="station__item-content">
-						<h3 class="station__item-title">Иваново Автовокзал - Большое Клочково</h3>
+						<h3 class="station__item-title">Иваново Автовокзал - <span>{{ stationsNames[item.arrival] }}</span></h3>
 						<a href="#" class="station__item-buy station__item-buy_desc">Купить билет</a>
 						<a href="#" class="station__item-buy station__item-buy_mob">Узнать цены</a>
 					</div>
 					<div class="station__schedule">
 						<div class="station__schedule-grid">
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>неизвестно</span></div>
+							<div class="station__schedule-item" v-for="(schedule, key) in item.schedules">
+								<div class="station__schedule-icon" v-if="schedule.transit"><img src="img/icon-2.svg" alt=""></div>
+								<div class="station__schedule-text">{{ schedule.time }}</div>
+								<div class="station__schedule-day" v-if="schedule.activeDays === 0">
+									<span>неизвестно</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 127">
+									<span>ежедневно</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 64">
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 16">
+									<span>пт</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 1">
+									<span>пн</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 80">
+									<span>пт</span>, 
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 68">
+									<span>ср</span>, 
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 33">
+									<span>пн</span>, 
+									<span class="is-holiday">сб</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 112">
+									<span>пт</span>, 
+									<span class="is-holiday">сб</span>, 
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 63">
+									<span>пн</span>, 
+									<span>вт</span>, 
+									<span>ср</span>, 
+									<span>чт</span>, 
+									<span>пт</span>, 
+									<span class="is-holiday">сб</span>, 
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 18">
+									<span>вт</span>, 
+									<span>пт</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 48">
+									<span>пт</span>, 
+									<span class="is-holiday">сб</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 31">
+									<span>По будням</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 32">
+									<span class="is-holiday">сб</span>
+								</div>
+								<div class="station__schedule-day" v-else-if="schedule.activeDays === 65">
+									<span>пн</span>, 
+									<span class="is-holiday">вс</span>
+								</div>
+								<div class="station__schedule-day" v-else>
+									<span>{{ schedule.activeDays }}</span>
+								</div>
 							</div>
-						</div>
-						<div class="station__schedule-name"><a href="#">Иваново — Большое Клочково, Ивановская область</a></div>
-					</div>
-				</div>
-				<div class="station__item">
-					<div class="station__item-content">
-						<h3 class="station__item-title">Иваново Автовокзал - Верхний Ландех</h3>
-						<a href="#" class="station__item-buy station__item-buy_desc">Купить билет</a>
-						<a href="#" class="station__item-buy station__item-buy_mob">Узнать цены</a>
-					</div>
-					<div class="station__schedule">
-						<div class="station__schedule-grid">
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>вс</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>неизвестно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>пт</span></div>
-							</div>
-						</div>
-						<div class="station__schedule-name"><a href="#">Иваново - Верхний Ландех</a></div>
-					</div>
-				</div>
-				<div class="station__item">
-					<div class="station__item-content">
-						<h3 class="station__item-title">Иваново Автовокзал - Владимир</h3>
-						<a href="#" class="station__item-buy station__item-buy_desc">Купить билет</a>
-						<a href="#" class="station__item-buy station__item-buy_mob">Узнать цены</a>
-					</div>
-					<div class="station__schedule">
-						<div class="station__schedule-grid">
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-icon"><img src="img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">08:20</div>
-								<div class="station__schedule-day"><span>пт</span>, <span>сб</span>, <span>вс</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
-								<div class="station__schedule-text">13:15</div>
-								<div class="station__schedule-day"><span>ежедневно</span></div>
-							</div>
-							<div class="station__schedule-item">
+							<div class="station__schedule-item" v-if="item.schedules.length === 15">
 								<a href="#" class="station__schedule-more">всё расписание</a>
 							</div>
 						</div>
-						<div class="station__schedule-name"><a href="#">Иваново - Владимир</a></div>
+						<div class="station__schedule-name"><a href="#">Иваново — {{ stationsNames[item.arrival] }}</a></div>
 					</div>
 				</div>
 			</div>
@@ -280,6 +240,98 @@
 	<!-- end section station -->
 
 	<script src="js/main.min.js"></script>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<script>
+		Vue.createApp({
+			data: () => ({
+				search: '',
+				loading: true,
+				url: 'https://bus.tutu.ru/bus/v1/schedule/bus_terminal/?bus_stop_id=1177120&offset=0&limit=100',
+				departure: 1444796,
+				stations: [],
+				stationsNames: {},
+				data: [],
+				dataStations: []
+			}),
+			mounted () {
+				fetch(this.url)
+					.then(res => res.text())
+					.then((res) => {
+						this.data = JSON.parse(res).data;
+						let obj;
+						this.data.forEach(item => {
+							this.dataStations.push(item.geoPointId);
+							obj = {
+								arrival: ''+item.geoPointId,
+								schedules: []
+							};
+							item.schedules.forEach(schedule => {
+								let someObj = {
+									time: schedule.time,
+									days: schedule.activeDaysData.mode,
+									transit: schedule.isTransit,
+									activeDays: schedule.activeDaysData.params.activeDays ? schedule.activeDaysData.params.activeDays : schedule.activeDays
+								};
+								obj.schedules.push(someObj)
+							})
+							this.stations.push(obj)
+						});
+
+						this.dataStationUnic.forEach(item => {
+							let geoUrl = `https://api-bus.tutu.ru/v1/search/?departureId=${this.departure}&arrivalId=${item}&departureDate=09.02.2023&seatCount=1`
+							fetch(geoUrl)
+								.then(res => res.text())
+								.then((res) => {
+									this.stationsNames[item] = JSON.parse(res).data.references.geoPoints[1].name;
+								})
+						});
+
+						this.init();
+					})
+			},
+			computed: {
+				dataStationUnic() {
+					let result = [];
+
+					result = this.dataStations.reduce((acc, item) => {
+						if (acc.includes(item)) {
+							return acc;
+						}
+						return [...acc, item];
+					}, [])
+
+					return result;
+				}
+			},
+			methods: {
+				searchFun: (e) => {
+					let target = e.target;
+					let val = target.value;
+					let $delay = 500;
+					clearTimeout(target.dataset.timer);
+					target.dataset.timer = setTimeout(() => {
+						target.dataset.timer = '';
+						let items = document.querySelectorAll('.station__item');
+						items.forEach((item) => {
+							item.style.display = 'flex';
+							let text = item.querySelector('.station__item-title span').textContent
+							console.log(val);
+							console.log(text);
+							console.log(text.indexOf(val));
+							if (text.indexOf(val) != -1) {
+								item.style.display = 'flex';
+							} else {
+								item.style.display = 'none';
+							}
+						})
+					}, $delay)
+				},
+				init: function() {
+
+				}
+			}
+		}).mount('#app');
+	</script>
 
 </body>
 </html>
