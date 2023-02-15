@@ -1,0 +1,312 @@
+.header
+	padding-top: 20px
+	padding-bottom: 20px
+	background-color: #fff
+	position: relative
+	z-index: 9
+	&__loc
+		@include media-breakpoint-down(sm)
+			display: none
+	&__logo
+		display: flex
+		align-items: center
+		&-img
+			font-size: 0
+			margin-right: 10px
+		&-content
+			flex: 1
+		&-name
+			margin-bottom: 2px
+			font-weight: 500
+			line-height: 1.12
+			letter-spacing: -0.09px
+			text-transform: uppercase
+	&__search
+		position: relative
+		&-link
+			line-height: 1.12
+			color: #4c9fc1
+			text-decoration: none
+			border-bottom: 1px dashed #4c9fc1
+			transition: .3s ease-in-out
+			&:hover,
+			&:focus-visible
+				color: #c14c97
+				border-color: #c14c97
+		&-form
+			display: none
+			position: absolute
+			left: 0
+			top: 100%
+			width: 200px
+			padding: 10px
+			background: #FFFFFF
+			border: 1px solid #EEEEEE
+			box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)
+			border-radius: 8px
+		&-top
+			display: flex
+			align-items: center
+			position: relative
+			margin-bottom: 10px
+		&-input
+			width: 100%
+			background: #DBECF3
+			border-radius: 8px
+			height: 32px
+			padding: 10px
+			padding-right: 48px
+			border: 0
+			font-family: inherit
+			font-size: 12px
+			line-height: 14px
+			color: #84a4b1
+			&::-webkit-input-placeholder
+				color: #84a4b1
+				opacity: 1
+				transition: opacity .3s
+			&:focus::-webkit-input-placeholder
+				opacity: 1
+			&:-moz-placeholder
+				color: #84a4b1
+				opacity: 1
+				transition: opacity .3s
+			&:focus::-moz-placeholder
+				opacity: 1
+			&::-moz-placeholder
+				color: #84a4b1
+				opacity: 1
+				transition: opacity .3s
+			&:focus:-moz-placeholder
+				opacity: 1
+			&:-ms-input-placeholder
+				color: #84a4b1
+				opacity: 1
+				transition: opacity .3s
+			&:focus:-ms-input-placeholder
+				opacity: 1
+			&:focus:required:invalid,
+			&:focus:required:invalid
+				color: #84a4b1
+			&:required:valid,
+			&:required:valid
+				color: #84a4b1
+		&-btn
+			position: absolute
+			background: 0
+			border: 0
+			padding: 0
+			font-size: 0
+			line-height: 0
+			right: 10px
+			fill: none
+			stroke: #84a4b1
+			cursor: pointer
+		&-list
+			max-height: 322px
+			overflow: auto
+			.simplebar-scrollbar:before
+				opacity: 1
+				background: #c14c97
+				width: 6px
+				left: 0
+			.simplebar-track.simplebar-vertical
+				background: #eee
+				width: 6px
+		&-item
+			display: block
+			margin-bottom: 20px
+			font-size: 14px
+			letter-spacing: -0.13px
+			color: #374151
+			text-decoration: none
+			&:hover,
+			&:focus-visible
+				color: #c14c97
+			&:last-child
+				margin-bottom: 0
+	&__nav
+		margin: 0 auto
+		@include media-breakpoint-down(sm)
+			width: 295px
+			height: calc(100vh - 100%)
+			position: absolute
+			top: 100%
+			right: -295px
+			transition: .3s ease-in-out
+			z-index: 9
+			background-color: #fff
+			nav
+				background-color: #fff
+				width: 100%
+				height: 100%
+				overflow: auto
+			&::after
+				position: absolute
+				z-index: -1
+				top: 0
+				left: 50%
+				transform: translate(-50%, 0)
+				content: ''
+				width: 200vw
+				height: 100%
+				background-color: rgba(#000, .35)
+				transition: .3s ease-in-out
+				opacity: 0
+			&.is-active
+				right: 0
+				&::after
+					opacity: 1
+					visibility: visible
+		nav
+			& > ul
+				margin: 0
+				padding: 0
+				list-style-type: none
+				display: flex
+				align-items: center
+				@include media-breakpoint-down(sm)
+					display: block
+					padding: 25px 15px
+				& > li
+					margin-right: 15px
+					font-size: 16px
+					line-height: 1.12
+					letter-spacing: -0.09px
+					@include media-breakpoint-down(sm)
+						margin-right: 0
+						margin-bottom: 15px
+						font-size: 20px
+						&:last-child
+							margin-bottom: 0
+					&.menu-item-has-children
+						position: relative
+						& > ul
+							display: none
+							position: absolute
+							top: 100%
+							left: 0
+							background: #FFFFFF
+							border: 1px solid #EEEEEE
+							box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)
+							border-radius: 8px
+							padding: 20px 10px
+							margin: 0
+							list-style-type: none
+							width: 200px
+							@include media-breakpoint-down(sm)
+								position: static
+								width: 0
+								background: 0
+								width: auto
+								box-shadow: unset
+								border: 0
+								padding: 20px 10px 0
+							& > li
+								font-size: 14px
+								letter-spacing: -0.13px
+								margin-bottom: 20px
+								@include media-breakpoint-down(sm)
+									font-size: 20px
+								&.header__nav-tel,
+								&.header__nav-faq
+									a
+										position: relative
+										padding-left: 30px
+										&::after
+											position: absolute
+											left: 0
+											top: 50%
+											transform: translate(0,-50%)
+											content: ''
+											width: 24px
+											height: 24px
+											background-repeat: no-repeat
+											background-position: center
+								&.header__nav-tel
+									a::after
+										background-image: url(../img/tel.svg)
+								&.header__nav-faq
+									a::after
+										background-image: url(../img/faq.svg)
+								&:last-child
+									margin-bottom: 0
+								& > a
+									color: #2e384d
+									text-decoration: none
+									transition: .3s ease-in-out
+									&:hover,
+									&:focus-visible
+										color: #c14c97
+						& > a
+							padding-right: 24px
+							position: relative
+							&::before,
+							&::after
+								position: absolute
+								right: 0
+								top: 50%
+								transform: translate(0,-50%)
+								content: ''
+								width: 24px
+								height: 24px
+								background-repeat: no-repeat
+								background-position: center
+								transition: .3s ease-in-out
+							&::before
+								background-image: url(../img/menu-arrow.svg)
+							&::after
+								background-image: url(../img/menu-arrow-active.svg)
+								opacity: 0
+								visibility: hidden
+						&.is-active
+							& > a
+								&::before,
+								&::after
+									opacity: 1
+									visibility: visible
+									transform: translate(0, -50%) rotate(180deg)
+					&:hover
+						& > a
+							color: #c14c97
+							&::after,
+							&::before
+								opacity: 1
+								visibility: visible
+					&:last-child
+						margin-right: 0
+					& > a
+						color: #2e384d
+						text-decoration: none
+						transition: .3s ease-in-out
+						&:hover,
+						&:focus-visible
+							color: #c14c97
+							&::after,
+							&::before
+								opacity: 1
+								visibility: visible
+	&__menu
+		display: none
+		@include media-breakpoint-down(sm)
+			margin-left: auto
+			display: flex
+			align-items: center
+			justify-content: center
+			text-align: center
+			background: 0
+			border: 1px solid #4C9FC1
+			color: #4c9fc1
+			padding: 8px 10px
+			letter-spacing: -0.09px
+			border-radius: 6px
+			transition: .3s ease-in-out
+			&.is-active
+				border-color: #c14c97
+				color: #c14c97
+				span:last-child
+					display: block
+				span:first-child
+					display: none
+			span:last-child
+				display: none

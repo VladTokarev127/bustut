@@ -23,6 +23,8 @@ body
 	font-family: $default-font
 	overflow-x: hidden
 	opacity: 1
+	&.is-fixed
+		overflow: hidden
 
 .container
 	display: flex
@@ -31,3 +33,12 @@ body
 	max-width: 940px
 	margin: 0 auto
 	padding: 0 10px
+
+.wrapper
+	overflow: hidden
+	display: flex
+	flex-direction: column
+	min-height: 100vh
+
+.main
+	flex: 1
