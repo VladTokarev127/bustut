@@ -32,7 +32,7 @@ $(function() {
 
 	$('.js-search').on('keyup', function(e) {
 		let target = $(this);
-		let val = target.val();
+		let val = target.val().toLowerCase();
 		let $delay = 500;
 		let parent = $(this).parents('.header__search-form');
 		clearTimeout(target.data('timer'));
@@ -41,7 +41,7 @@ $(function() {
 			let items = parent.find('.header__search-item');
 			items.each(function() {
 				$(this).show();
-				let text = $(this).text();
+				let text = $(this).text().toLowerCase();
 				if (text.indexOf(val) != -1) {
 					$(this).show();
 				} else {
@@ -64,9 +64,9 @@ $(function() {
 		})
 	} else {
 		$('.menu-item-has-children').hover(function() {
-			$(this).addClass('is-active').find('ul').slideDown(300);
+			$(this).addClass('is-active').find('ul').stop().slideDown(300);
 		}, function() {
-			$(this).removeClass('is-active').find('ul').slideUp(300);
+			$(this).removeClass('is-active').find('ul').stop().slideUp(300);
 		});
 	}
 	

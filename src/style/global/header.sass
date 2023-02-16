@@ -5,6 +5,19 @@
 	position: relative
 	z-index: 9
 	&__loc
+		position: relative
+		padding-left: 25px
+		&::after
+			position: absolute
+			left: 0
+			top: 50%
+			transform: translate(0,-50%)
+			content: ''
+			width: 24px
+			height: 24px
+			background-image: url(../img/loc.svg)
+			background-repeat: no-repeat
+			background-position: center
 		@include media-breakpoint-down(sm)
 			display: none
 	&__logo
@@ -37,7 +50,7 @@
 			display: none
 			position: absolute
 			left: 0
-			top: 100%
+			top: calc(100% + 5px)
 			width: 200px
 			padding: 10px
 			background: #FFFFFF
@@ -184,7 +197,7 @@
 						& > ul
 							display: none
 							position: absolute
-							top: 100%
+							top: calc(100% + 5px)
 							left: 0
 							background: #FFFFFF
 							border: 1px solid #EEEEEE

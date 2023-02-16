@@ -1,4 +1,6 @@
+	</main>
 
+</div>
 
 	<?php wp_footer(); ?>
 	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -67,7 +69,7 @@
 			methods: {
 				searchFun: (e) => {
 					let target = e.target;
-					let val = target.value;
+					let val = target.value.toLowerCase();
 					let $delay = 500;
 					clearTimeout(target.dataset.timer);
 					target.dataset.timer = setTimeout(() => {
@@ -75,10 +77,7 @@
 						let items = document.querySelectorAll('.station__item');
 						items.forEach((item) => {
 							item.style.display = 'flex';
-							let text = item.querySelector('.station__item-title span').textContent
-							console.log(val);
-							console.log(text);
-							console.log(text.indexOf(val));
+							let text = item.querySelector('.station__item-title span').textContent.toLowerCase()
 							if (text.indexOf(val) != -1) {
 								item.style.display = 'flex';
 							} else {
@@ -93,6 +92,5 @@
 			}
 		}).mount('#app');
 	</script>
-
 </body>
 </html>
