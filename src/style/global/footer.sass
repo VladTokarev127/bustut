@@ -1,0 +1,147 @@
+.footer
+	&__top
+		padding-top: 25px
+		padding-bottom: 25px
+		flex: 1 100%
+		display: flex
+		align-items: flex-start
+		justify-content: space-between
+		border-bottom: 1px solid #dfe5ed
+		@include media-breakpoint-down(sm)
+			flex-wrap: wrap
+	&__col
+		flex: 0 310px
+		@include media-breakpoint-down(sm)
+			flex: 1 100%
+			margin-bottom: 20px
+		&-text
+			margin-bottom: 25px
+			font-size: 14px
+			line-height: 16px
+			letter-spacing: -0.09px
+			color: #2E384D
+		&-bottom
+			font-size: 12px
+			line-height: 14px
+			letter-spacing: -0.09px
+			color: #8798AD
+	&__logo
+		display: flex
+		align-items: center
+		text-decoration: none
+		margin-bottom: 20px
+		&-img
+			font-size: 0
+			margin-right: 10px
+		&-content
+			flex: 1
+		&-title
+			margin-bottom: 2px
+			font-size: 16px
+			line-height: 18px
+			letter-spacing: -0.09px
+			text-transform: uppercase
+			color: #4C9FC1
+			font-weight: 500
+		&-text
+			font-weight: 500
+			font-size: 16px
+			line-height: 18px
+			letter-spacing: -0.09px
+			color: #2E384D
+	&__info
+		flex: 0 180px
+		@include media-breakpoint-down(sm)
+			flex: 1 100%
+			margin-bottom: 20px
+		&-text
+			font-size: 14px
+			line-height: 16px
+			letter-spacing: -0.09px
+			color: #8798AD
+	&__rows
+		margin-bottom: 10px
+	&__row
+		display: flex
+		align-items: center
+		text-decoration: none
+		color: #374151
+		transition: .3s ease-in-out
+		margin-bottom: 10px
+		&:last-child
+			margin-bottom: 0
+		&:hover,
+		&:focus-visible
+			color: #c14c97
+		&-img
+			margin-right: 7px
+			width: 24px
+			svg
+				width: 100%
+				height: auto
+		&-text
+			flex: 1
+			font-size: 14px
+			line-height: 16px
+			letter-spacing: -0.09px
+	&__nav
+		flex: 0 146px
+		@include media-breakpoint-down(sm)
+			flex: 1 100%
+		ul
+			margin: 0
+			padding: 0
+			list-style-type: none
+		li
+			margin-bottom: 10px
+			font-size: 14px
+			line-height: 16px
+			letter-spacing: -0.09px
+			&:last-child
+				margin-bottom: 0
+		a
+			color: #000
+			text-decoration: none
+			transition: .3s ease-in-out
+			&:hover,
+			&:focus-visible
+				color: #c14c97
+	&__bottom
+		padding-top: 25px
+		padding-bottom: 25px
+		display: flex
+		align-items: flex-start
+		flex: 1 100%
+		@include media-breakpoint-down(sm)
+			flex-wrap: wrap
+		&-text
+			flex: 1
+			margin-right: 30px
+			font-size: 12px
+			line-height: 14px
+			letter-spacing: -0.09px
+			color: #8798AD
+			@include media-breakpoint-down(sm)
+				flex: 1 100%
+				margin-right: 0
+				margin-bottom: 30px
+		&-apps
+			display: flex
+			align-items: center
+			@include media-breakpoint-down(sm)
+				flex-wrap: wrap
+		&-app
+			margin-right: 15px
+			font-size: 0
+			display: block
+			transition: .3s ease-in-out
+			@include media-breakpoint-down(xs)
+				flex: 1 100%
+				margin-right: 0
+				margin-bottom: 15px
+			&:hover,
+			&:focus-visible
+				opacity: 0.6
+			&:last-child
+				margin-right: 0
+				margin-bottom: 0
