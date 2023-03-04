@@ -41,3 +41,98 @@
 
 		add_theme_support('post-thumbnails');
 	}
+
+	add_action( 'admin_head', 'cron_activation' );
+	function cron_activation() {
+		if( ! wp_next_scheduled( 'set_stations_list_action' ) ) {
+			wp_schedule_event( time(), '5min', 'set_stations_list_action');
+		}
+	}
+
+	function get_leaders() {
+		global $wpdb;
+		$wpdb->query("TRUNCATE TABLE `wp_stations_list`");
+		$curl = curl_init();
+		$config['useragent'] = 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
+		curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl,CURLOPT_URL, 'https://bus.tutu.ru/bus/v1/schedule/bus_terminal/?bus_stop_id=1177120&offset=0&limit=100');
+		curl_setopt($curl,CURLOPT_HTTPHEADER,['Content-Type:application/json']);
+		curl_setopt($curl,CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_REFERER, 'https://ivanovo-avtovokzal.ru/');
+		curl_setopt($curl, CURLOPT_USERAGENT, $config['useragent']);
+		curl_setopt($curl,CURLOPT_CUSTOMREQUEST, 'GET');
+		$out = curl_exec($curl);
+		$json = json_decode($out)->{'data'};
+		$dataStations = [];
+		$stationsIds = [];
+		$daysToHtml = [
+			0   => '<span>неизвестно</span>',
+			127 => '<span>ежедневно</span>',
+			64  => '<span class="is-holiday">вс</span>',
+			16  => '<span>пт</span>',
+			1   => '<span>пн</span>',
+			80  => '<span>пт</span>, <span class="is-holiday">вс</span>',
+			68  => '<span>ср</span>, <span class="is-holiday">вс</span>',
+			33  => '<span>пн</span>, <span class="is-holiday">сб</span>',
+			112 => '<span>пт</span>, <span class="is-holiday">сб</span>, <span class="is-holiday">вс</span>',
+			63  => '<span>пн</span>, <span>вт</span>, <span>ср</span>, <span>чт</span>, <span>пт</span>, <span class="is-holiday">сб</span>, <span class="is-holiday">вс</span>',
+			18  => '<span>вт</span>, <span>пт</span>',
+			48  => '<span>пт</span>, <span class="is-holiday">сб</span>',
+			31  => '<span>По будням</span>',
+			32  => '<span class="is-holiday">сб</span>',
+			65  => '<span>пн</span>, <span class="is-holiday">вс</span>'
+		];
+		foreach ($json as $itemKey => $item) {
+			array_push($stationsIds, $item->geoPointId);
+			array_push($dataStations, array('geoPointId' => $item->geoPointId, 'schedules' => [], 'stationName' => ''));
+			foreach($item->schedules as $key => $schedule) {
+				$activeDays = $schedule->activeDaysData->params->activeDays ? $schedule->activeDaysData->params->activeDays : $schedule->activeDays;
+				$daysHtml = $daysToHtml[$activeDays];
+				array_push($dataStations[$itemKey]['schedules'], array('time' => $schedule->time, 'days' => $schedule->activeDaysData->mode, 'transit' => $schedule->isTransit, 'activeDays' => $activeDays, 'daysHtml' => $daysHtml));
+			}
+		}
+		$stationsIds = array_unique($stationsIds);
+		foreach($stationsIds as $key => $id) {
+			$curl = curl_init();
+			$config['useragent'] = 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
+			curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl,CURLOPT_URL, 'https://api-bus.tutu.ru/v1/search/?departureId=1444796&arrivalId='. $id .'&departureDate=09.02.2023&seatCount=1');
+			curl_setopt($curl,CURLOPT_HTTPHEADER,['Content-Type:application/json']);
+			curl_setopt($curl,CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLOPT_REFERER, 'https://ivanovo-avtovokzal.ru/');
+			curl_setopt($curl, CURLOPT_USERAGENT, $config['useragent']);
+			curl_setopt($curl,CURLOPT_CUSTOMREQUEST, 'GET');
+			$stationOut = curl_exec($curl);
+			$stationJson = json_decode($stationOut);
+			$name = $stationJson->data->references->geoPoints[1]->name;
+			foreach($dataStations as $statKey => $item) {
+				if ($item['geoPointId'] === $id) {
+					$dataStations[$statKey]['stationName'] = $name;
+				}
+				// $wpdb->insert(
+				// 	$wpdb->prefix . 'stations_list',
+				// 	array(
+				// 		'ID' => $userID,
+				// 		'user_score' => $userScore,
+				// 		'last_date' => $lastDate,
+				// 		'user_name' => $userName,
+				// 		'user_comments' => $userComments,
+				// 		'game_count' => $gameCount,
+				// 	),
+				// 	array(
+				// 		'%d',
+				// 		'%d',
+				// 		'%s',
+				// 		'%s',
+				// 		'%d',
+				// 		'%d'
+				// 	)
+				// );
+			}
+		}
+	}
+
+	add_action( 'set_stations_list_action', 'set_stations_list' );
+	function set_stations_list(){
+		get_leaders();
+	}

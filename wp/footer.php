@@ -7,7 +7,7 @@
 
 					<div class="footer__col">
 						<a href="/" class="footer__logo">
-							<div class="footer__logo-img"><img src="/wp-content/themes/autobus/img/logo.svg" alt=""></div>
+							<div class="footer__logo-img"><img src="/wp-content/themes/autobus/img/logo.svg" svg=""></div>
 							<div class="footer__logo-content">
 								<div class="footer__logo-title">Ивановский</div>
 								<div class="footer__logo-text">Автовокзал</div>
@@ -68,9 +68,9 @@
 					
 					<div class="footer__bottom-text">Данные, используемые на сайте ivanovo-avtovokzal.ru, включая стоимость электронных билетов на автобусы и расписание автобусов взяты из официальных источников. Билеты на автобусы предоставляются партнером Туту.ру и их стоимость указана с учетом сервисного сбора Туту.ру. Окончательную сумму можно увидеть на шаге подтверждения заказа.</div>
 					<div class="footer__bottom-apps">
-						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-1.png" alt=""></a>
-						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-2.png" alt=""></a>
-						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-3.png" alt=""></a>
+						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-1.svg" alt=""></a>
+						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-2.svg" alt=""></a>
+						<a href="#" class="footer__bottom-app"><img src="/wp-content/themes/autobus/img/footer-app-3.svg" alt=""></a>
 					</div>
 
 				</div>
