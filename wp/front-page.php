@@ -121,87 +121,46 @@
 			</div>
 
 			<div class="station__list">
-				<div class="station__item" v-for="(item, key) in stations">
+				<?php
+				global $wpdb;
+				$stations = $wpdb->get_results("SELECT * FROM wp_stations_list ORDER BY `ID` ASC");
+				foreach($stations as $key=>$station):
+					$ID = $station->ID;
+					$geoPointId = $station->geoPointId;
+					$schedules = json_decode($station->schedules);
+					$stationName = $station->stationName;
+				?>
+				<div class="station__item">
 					<div class="station__item-content">
-						<h3 class="station__item-title">Иваново Автовокзал - <span>{{ stationsNames[item.arrival] }}</span></h3>
+						<h3 class="station__item-title">Иваново Автовокзал - <span><?php echo $stationName; ?></span></h3>
 						<a href="#" class="station__item-buy station__item-buy_desc">Купить билет</a>
 						<a href="#" class="station__item-buy station__item-buy_mob">Узнать цены</a>
 					</div>
 					<div class="station__schedule">
 						<div class="station__schedule-grid">
-							<div class="station__schedule-item" v-for="(schedule, key) in item.schedules">
-								<div class="station__schedule-icon" v-if="schedule.transit"><img src="/wp-content/themes/autobus/img/icon-2.svg" alt=""></div>
-								<div class="station__schedule-text">{{ schedule.time }}</div>
-								<div class="station__schedule-day" v-if="schedule.activeDays === 0">
-									<span>неизвестно</span>
+							<?php foreach($schedules as $scheduleKey=>$schedule): 
+								$transit = $schedule->transit;
+								$time = $schedule->time;
+								$days = $schedule->daysHtml;
+							?>
+								<div class="station__schedule-item">
+									<?php if($transit): ?>
+										<div class="station__schedule-icon"><img src="/wp-content/themes/autobus/img/icon-2.svg" alt=""></div>
+									<?php endif; ?>
+									<div class="station__schedule-text"><?php echo $time; ?></div>
+									<div class="station__schedule-day"><?php print_r($days); ?></div>
 								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 127">
-									<span>ежедневно</span>
+							<?php endforeach; ?>
+							<?php if(count($schedules) === 15): ?>
+								<div class="station__schedule-item">
+									<a href="#" class="station__schedule-more">всё расписание</a>
 								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 64">
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 16">
-									<span>пт</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 1">
-									<span>пн</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 80">
-									<span>пт</span>, 
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 68">
-									<span>ср</span>, 
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 33">
-									<span>пн</span>, 
-									<span class="is-holiday">сб</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 112">
-									<span>пт</span>, 
-									<span class="is-holiday">сб</span>, 
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 63">
-									<span>пн</span>, 
-									<span>вт</span>, 
-									<span>ср</span>, 
-									<span>чт</span>, 
-									<span>пт</span>, 
-									<span class="is-holiday">сб</span>, 
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 18">
-									<span>вт</span>, 
-									<span>пт</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 48">
-									<span>пт</span>, 
-									<span class="is-holiday">сб</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 31">
-									<span>По будням</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 32">
-									<span class="is-holiday">сб</span>
-								</div>
-								<div class="station__schedule-day" v-else-if="schedule.activeDays === 65">
-									<span>пн</span>, 
-									<span class="is-holiday">вс</span>
-								</div>
-								<div class="station__schedule-day" v-else>
-									<span>{{ schedule.activeDays }}</span>
-								</div>
-							</div>
-							<div class="station__schedule-item" v-if="item.schedules.length === 15">
-								<a href="#" class="station__schedule-more">всё расписание</a>
-							</div>
+							<?php endif; ?>
 						</div>
-						<div class="station__schedule-name"><a href="#">Иваново — {{ stationsNames[item.arrival] }}</a></div>
+						<div class="station__schedule-name"><a href="#">Иваново — <?php echo $stationName; ?></a></div>
 					</div>
 				</div>
+				<?php endforeach; ?>
 			</div>
 
 		</div>

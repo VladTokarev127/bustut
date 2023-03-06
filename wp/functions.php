@@ -45,11 +45,15 @@
 	add_action( 'admin_head', 'cron_activation' );
 	function cron_activation() {
 		if( ! wp_next_scheduled( 'set_stations_list_action' ) ) {
-			wp_schedule_event( time(), '5min', 'set_stations_list_action');
+			// установить часовой пояс PHP в UTC
+			default_timezone_set( 'UTC' );
+			// определить временную метку для запуска в первый раз.
+			$timestamp = strtotime( '2023-03-06 19:00:00' ); 
+			wp_schedule_event( $timestamp, 'daily', 'set_stations_list_action');
 		}
 	}
 
-	function get_leaders() {
+	function get_stations() {
 		global $wpdb;
 		$wpdb->query("TRUNCATE TABLE `wp_stations_list`");
 		$curl = curl_init();
@@ -90,6 +94,23 @@
 				$daysHtml = $daysToHtml[$activeDays];
 				array_push($dataStations[$itemKey]['schedules'], array('time' => $schedule->time, 'days' => $schedule->activeDaysData->mode, 'transit' => $schedule->isTransit, 'activeDays' => $activeDays, 'daysHtml' => $daysHtml));
 			}
+			$geoPointId = $dataStations[$itemKey]['geoPointId'];
+			$schedules = json_encode($dataStations[$itemKey]['schedules']);
+			$wpdb->insert(
+				$wpdb->prefix . 'stations_list',
+				array(
+					'ID' => $itemKey,
+					'geoPointId' => $geoPointId,
+					'schedules' => $schedules,
+					'stationName' => '',
+				),
+				array(
+					'%d',
+					'%d',
+					'%s',
+					'%s'
+				)
+			);
 		}
 		$stationsIds = array_unique($stationsIds);
 		foreach($stationsIds as $key => $id) {
@@ -108,31 +129,23 @@
 			foreach($dataStations as $statKey => $item) {
 				if ($item['geoPointId'] === $id) {
 					$dataStations[$statKey]['stationName'] = $name;
+					$wpdb->update(
+						$wpdb->prefix . 'stations_list',
+						array(
+							'stationName' => $name,
+						),
+						array(
+							'ID' => $statKey
+						)
+					);
 				}
-				// $wpdb->insert(
-				// 	$wpdb->prefix . 'stations_list',
-				// 	array(
-				// 		'ID' => $userID,
-				// 		'user_score' => $userScore,
-				// 		'last_date' => $lastDate,
-				// 		'user_name' => $userName,
-				// 		'user_comments' => $userComments,
-				// 		'game_count' => $gameCount,
-				// 	),
-				// 	array(
-				// 		'%d',
-				// 		'%d',
-				// 		'%s',
-				// 		'%s',
-				// 		'%d',
-				// 		'%d'
-				// 	)
-				// );
 			}
 		}
 	}
 
+	// get_stations();
+
 	add_action( 'set_stations_list_action', 'set_stations_list' );
 	function set_stations_list(){
-		get_leaders();
+		get_stations();
 	}
