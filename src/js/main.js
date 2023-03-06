@@ -76,6 +76,14 @@ $(function() {
 		$(this).toggleClass('is-active');
 		$('.header__nav').toggleClass('is-active');
 		$('body').toggleClass('is-fixed');
-	})
+	});
+
+	let interval;
+	interval = setInterval(() => {
+		if($('#widget-container *').is('.widget_root')) {
+			$('.loader__wrapper').remove();
+			clearInterval(interval);
+		}
+	}, 100);
 
 });

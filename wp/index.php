@@ -4,6 +4,9 @@
 	<section class="station-header">
 		<div class="container">
 
+			<div class="loader__wrapper">
+				<span class="loader"></span>
+			</div>
 			<script src="https://c45.travelpayouts.com/content?promo_id=2959&shmarker=195343&trs=88595&bus_from=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_to=&bus_sug1=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&bus_sug2=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug3=%25D0%25A8%25D1%2583%25D1%258F_1444797&bus_sug4=%25D0%2598%25D0%25B2%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25BE_1444796&color_theme=basic_white&show_logo_tab=false&show_logo=false" charset="utf-8" async></script>
 
 			<div class="station-header__info">
